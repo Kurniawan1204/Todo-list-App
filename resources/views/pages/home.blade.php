@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
+@include('partials.count')
+
     <div id="content" class="overflow-y-hidden overflow-x-hidden">
         @if ($lists->count() == 0)
             <div class="d-flex flex-column align-items-center">
@@ -13,7 +16,7 @@
         @endif
         <div class="d-flex gap-3 px-3 flex-nowrap overflow-x-scroll overflow-y-hidden" style="height: 100vh;">
             @foreach ($lists as $list)
-                <div class="card flex-shrink-0" style="width: 18rem; max-height: 80vh;">
+                <div class="card flex-shrink-0" style="width: 30rem; max-height: 80vh;">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h4 class="card-title">{{ $list->name }}</h4>
                         <form action="{{ route('lists.destroy', $list->id) }}" method="POST" style="display: inline;">
@@ -29,16 +32,19 @@
                             @if ($task->list_id == $list->id)
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex  align-items-center justify-content-between">
                                             <div class="d-flex flex-column justify-content-center gap-2">
                                                 <a href="{{route('tasks.show', $task->id)}}"
-                                                    class="fw-bold lh-1 m-0 {{ $task->is_completed ? 'text-decoration-line-through' : '' }}">
+                                                    class="fw-bold lh-1 m-0 {{ $task->is_completed ? 'text-decoration-line-through' : '' }} text-decoration-none">
                                                     {{ $task->name }}
                                                 </a>
                                                 <span class="badge text-bg-{{ $task->priorityClass }} badge-pill"
                                                     style="width: fit-content">
                                                     {{ $task->priority }}
                                                 </span>
+                                                <span>
+                                                    12/04/2023    
+                                                </span>                                                
                                             </div>
                                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
                                                 style="display: inline;">
@@ -60,14 +66,13 @@
                                             <form action="{{ route('tasks.complete', $task->id) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-sm btn-primary w-100">
+                                                <button type="submit" class="btn btn-sm btn-primary w-25 ">
                                                     <span class="d-flex align-items-center justify-content-center">
                                                         <i class="bi bi-check fs-5"></i>
                                                         Selesai
                                                     </span>
                                                 </button>
                                             </form>
-
                                         </div>
                                     @endif
                                 </div>
