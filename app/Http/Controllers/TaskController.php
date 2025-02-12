@@ -43,6 +43,21 @@ class TaskController extends Controller
 
         return redirect()->back();
     }
+     // Fungsi show untuk menampilkan detail tugas berdasarkan ID.
+     public function show($id){
+        // Mencari tugas berdasarkan ID, jika tidak ditemukan akan menampilkan error 404.
+        $task = Task::findOrFail($id);
+    
+        // Menyiapkan data untuk dikirim ke tampilan.
+        $data = [
+            'title' => 'Details',   // Menentukan judul halaman.
+            'task' => $task,        // Mengirim data tugas ke tampilan.
+        ];
+    
+        // Menampilkan tampilan 'pages.details' dengan data tugas.
+        return view('pages.details',  $data);
+    }    
+
 
     public function destroy($id) {
         Task::findOrFail($id)->delete();
