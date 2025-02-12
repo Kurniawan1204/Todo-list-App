@@ -13,38 +13,38 @@ class TaskController extends Controller
             'title' => 'Home',
             'lists' => TaskList::all(),
             'tasks' => Task::orderBy('created_at', 'desc')->get(),
-            // 'priorities' => Task::PRIORITIES
+            'priorities' => Task::PRIORITIES
         ];
 
         return view('pages.home', $data);
     }
 
-//     public function store(Request $request) {
-//         $request->validate([
-//             'name' => 'required|max:100',
-//             'list_id' => 'required'
-//         ]);
+    public function store(Request $request) {
+        $request->validate([
+            'name' => 'required|max:100',
+            'list_id' => 'required'
+        ]);
 
-//         Task::create([
-//             'name' => $request->name,
-//             'list_id' => $request->list_id
-//         ]);
+        Task::create([
+            'name' => $request->name,
+            'list_id' => $request->list_id
+        ]);
 
 
-//         return redirect()->back();
-//     }
+        return redirect()->back();
+    }
 
-//     public function complete($id) {
-//         Task::findOrFail($id)->update([
-//             'is_completed' => true
-//         ]);
+    public function complete($id) {
+        Task::findOrFail($id)->update([
+            'is_completed' => true
+        ]);
 
-//         return redirect()->back();
-//     }
+        return redirect()->back();
+    }
 
-//     public function destroy($id) {
-//         Task::findOrFail($id)->delete();
+    public function destroy($id) {
+        Task::findOrFail($id)->delete();
 
-//         return redirect()->back();
-//     }
+        return redirect()->back();
+    }
 }
