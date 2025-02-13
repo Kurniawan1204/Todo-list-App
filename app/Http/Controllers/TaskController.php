@@ -68,8 +68,8 @@ class TaskController extends Controller
         ]);
 
 
-        return redirect()->back();
-    }
+// Redirect kembali ke halaman sebelumnya dengan pesan sukses.
+return redirect()->back()->with('success', 'Tugas berhasil ditambahkan!');    }
 
     public function complete($id)
     {
@@ -77,14 +77,15 @@ class TaskController extends Controller
             'is_completed' => true
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Tugas telah diselesaikan!');
     }
 
     public function destroy($id)
     {
         Task::findOrFail($id)->delete();
 
-        return redirect()->route('home');
+
+        return redirect()->route('home')->with('delete', 'Tugas berhasil dihapus!');
     }
 
     public function show($id)
