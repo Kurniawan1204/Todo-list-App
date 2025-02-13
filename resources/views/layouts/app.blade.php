@@ -10,6 +10,9 @@
       <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
       <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/font/bootstrap-icons.min.css') }}">
 
+      <!-- Import CSS -->
+      <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
 </head>
 <body>
     

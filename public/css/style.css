@@ -1,0 +1,67 @@
+:root{
+    --base-color: white;
+    --base-variant:white;
+    --text-color: #111528;
+    --secondary-text: #232738;
+    --primary-color: #ffffff;
+    --accent-color: #0071ff;
+    --nav-color: linear-gradient(90deg, #0071ff, #00c6ff);
+}
+.darkmode{
+    --base-color: rgb(45, 43, 43);
+    --base-variant:rgb(52, 44, 44);
+    --text-color: #ffffff;
+    --secondary-text: #232738;
+    --primary-color: #3a435d;
+    --accent-color: #0071ff;
+    --nav-color: linear-gradient(90deg, #4a537f, #3a435d);
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+body{
+    min-height: 100vh;
+    background-color: var(--base-color);
+    color: var(--text-color);
+}
+
+.navbar {
+    background: var(--nav-color);
+    color: var(--text-color);
+}
+
+.card {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+#theme-switch {
+    height: 30px;
+    width: 30px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--base-variant);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Menghapus posisi fixed agar mengikuti flow layout */
+    position: relative;
+}
+
+#theme-switch i{
+    fill: var(--primary-color);
+}
+#theme-switch i:last-child{
+    display: none;
+}
+.darkmode #theme-switch i:first-child{
+    display: none;
+}
+.darkmode #theme-switch i:last-child{
+    display: block;
+}
