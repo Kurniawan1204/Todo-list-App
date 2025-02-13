@@ -11,6 +11,4 @@ Route::resource('lists', TaskListController::class);
 
 Route::resource('tasks', TaskController::class);
 Route::patch('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
-// Route::put('/tasks/{id}', [TaskController::class, 'update']);
-Route::put('/task/{id}', [TaskController::class, 'update'])->name('task.update');
-
+Route::patch('/tasks/{task}/change-list', [TaskController::class, 'changeList'])->name('tasks.changeList');
