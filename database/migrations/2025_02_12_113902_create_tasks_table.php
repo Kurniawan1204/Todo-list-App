@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('list_id')->constrained('task_lists')->onDelete('cascade'); // ✅ Pindahkan ke atas
             $table->string('name');
             $table->string('description')->nullable();
+            $table->date('deadline')->nullable(); 
             $table->boolean('is_completed')->default(false);
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->timestamps();
-
-            $table->foreignId('list_id')->constrained('task_lists', 'id')->onDelete('cascade');
         });
-    }
+        
+            }
 
     /**
      * Reverse the migrations.

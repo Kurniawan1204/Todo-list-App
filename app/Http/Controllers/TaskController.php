@@ -56,6 +56,7 @@ class TaskController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'description' => 'max:255',
+            'deadline' => 'required|date',
             'priority' => 'required|in:low,medium,high',
             'list_id' => 'required'
         ]);
@@ -63,10 +64,10 @@ class TaskController extends Controller
         Task::create([
             'name' => $request->name,
             'description' => $request->description,
+            'deadline' => $request->deadline,
             'priority' => $request->priority,
             'list_id' => $request->list_id
         ]);
-
 
 // Redirect kembali ke halaman sebelumnya dengan pesan sukses.
 return redirect()->back()->with('success', 'Tugas berhasil ditambahkan!');    }

@@ -8,13 +8,17 @@ use App\Models\TaskList;
 class Task extends Model
 {
     
-    protected $fillable = [
-        'name',
-        'description',
-        'is_completed',
-        'priority',
-        'list_id'
-    ];
+    // app/Models/Task.php
+
+protected $fillable = [
+    'name',
+    'description',
+    'is_completed',
+    'deadline',
+    'priority',
+    'list_id',
+];
+    
 
     protected $guarded = [
         'id',
