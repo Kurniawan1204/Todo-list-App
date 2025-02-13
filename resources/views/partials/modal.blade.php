@@ -47,7 +47,10 @@
                     <textarea class="form-control" id="description" name="description"
                         placeholder="Masukkan deskripsi tugas..." rows="3" required></textarea>
                 </div>
-
+                <div class="mb-3">
+                        <label for="deadline" class="form-label">Deadline</label>
+                        <input type="date" class="form-control" id="deadline" name="deadline" required>
+                    </div>
                 <div class="mb-3">
                     <label for="priority" class="form-label fw-semibold">Prioritas</label>
                     <select name="priority" id="priority" class="form-select">

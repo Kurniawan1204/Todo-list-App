@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("taskListId").value = taskId;
     });
 });
+
+// DarkMode
 let darkmode = localStorage.getItem('darkmode')
 const themeSwitch = document.getElementById('theme-switch')
 

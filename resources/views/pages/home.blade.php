@@ -68,15 +68,12 @@
                 </form>
             </div>
         </div>        
-        @endif
+        @endif        
         
-    
-
-
-
+            {{-- START LIST --}}
         <div class="d-flex gap-3 px-3 flex-nowrap overflow-x-scroll overflow-y-hidden" style="height: 100vh;">
             @foreach ($lists as $list)
-                <div class="card flex-shrink-0" style="width: 24rem; max-height: 80vh;">
+                <div class="card flex-shrink-0" style="width: 20rem; max-height: 60vh;">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h4 class="card-title">{{ $list->name }}</h4>
                         <form action="{{ route('lists.destroy', $list->id) }}" method="POST" style="display: inline;">
@@ -87,6 +84,8 @@
                             </button>
                         </form>
                     </div>
+                    {{-- End List --}}
+
                     <div class="card-body d-flex flex-column gap-2 overflow-x-hidden">
                         @foreach ($list->tasks as $task)
                             <div class="card {{ $task->is_completed ? 'bg-secondary-subtle' : '' }}">
@@ -113,9 +112,9 @@
                                             </button>
                                         </form>                                       
                                     </div>
-                                    <span>
-                                        12 / 08 / 2024
-                                    </span>
+                                    <span class="badge bg-warning text-dark">
+                                        Deadline: {{ \Carbon\Carbon::parse($task->deadline)->format('d/m/Y') }}
+                                    </span>                                    
                                 </div>
                                 <div class="card-body">
                                     <p
