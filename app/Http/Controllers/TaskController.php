@@ -8,21 +8,54 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index() {
+    public function index(Request $request)
+    {
+        $query = $request->input('query');
+
+        if ($query) {
+            $tasks = Task::where('name', 'like', "%{$query}%")
+                ->orWhere('description', 'like', "%{$query}%")
+                ->latest()
+                ->get();
+
+            $lists = TaskList::where('name', 'like', "%{$query}%")
+                ->orWhereHas('tasks', function ($q) use ($query) {
+                    $q->where('name', 'like', "%{$query}%")
+                        ->orWhere('description', 'like', "%{$query}%");
+                })
+                ->with('tasks')
+                ->get();
+
+
+            if ($tasks->isEmpty()) {
+                $lists->load('tasks');
+            } else {
+                $lists->load(['tasks' => function ($q) use ($query) {
+                    $q->where('name', 'like', "%{$query}%")
+                        ->orWhere('description', 'like', "%{$query}%");
+                }]);
+            }
+        } else {
+            $tasks = Task::latest()->get();
+            $lists = TaskList::with('tasks')->get();
+        }
+
         $data = [
             'title' => 'Home',
-            'lists' => TaskList::all(),
-            'tasks' => Task::orderBy('created_at', 'desc')->get(),
+            'lists' => $lists,
+            'tasks' => $tasks,
             'priorities' => Task::PRIORITIES
         ];
 
         return view('pages.home', $data);
     }
 
-    public function store(Request $request) {
+
+    public function store(Request $request)
+    {
         $request->validate([
             'name' => 'required|max:100',
-            'description' => 'required|max:255',
+            'description' => 'max:255',
             'list_id' => 'required'
         ]);
 
@@ -36,32 +69,62 @@ class TaskController extends Controller
         return redirect()->back();
     }
 
-    public function complete($id) {
+    public function complete($id)
+    {
         Task::findOrFail($id)->update([
             'is_completed' => true
         ]);
 
         return redirect()->back();
     }
-     // Fungsi show untuk menampilkan detail tugas berdasarkan ID.
-     public function show($id){
-        // Mencari tugas berdasarkan ID, jika tidak ditemukan akan menampilkan error 404.
-        $task = Task::findOrFail($id);
-    
-        // Menyiapkan data untuk dikirim ke tampilan.
-        $data = [
-            'title' => 'Details',   // Menentukan judul halaman.
-            'task' => $task,        // Mengirim data tugas ke tampilan.
-        ];
-    
-        // Menampilkan tampilan 'pages.details' dengan data tugas.
-        return view('pages.details',  $data);
-    }    
 
-
-    public function destroy($id) {
+    public function destroy($id)
+    {
         Task::findOrFail($id)->delete();
 
-        return redirect()->back();
+        return redirect()->route('home');
+    }
+
+    public function show($id)
+    {
+        $data = [
+            'title' => 'Task',
+            'lists' => TaskList::all(),
+            'task' => Task::findOrFail($id),
+        ];
+
+        return view('pages.details', $data);
+    }
+
+    public function changeList(Request $request, Task $task)
+    {
+        $request->validate([
+            'list_id' => 'required|exists:task_lists,id',
+        ]);
+
+        Task::findOrFail($task->id)->update([
+            'list_id' => $request->list_id
+        ]);
+
+        return redirect()->back()->with('success', 'List berhasil diperbarui!');
+    }
+
+    public function update(Request $request, Task $task)
+    {
+        $request->validate([
+            'list_id' => 'required',
+            'name' => 'required|max:100',
+            'description' => 'max:255',
+            'priority' => 'required|in:low,medium,high'
+        ]);
+
+        Task::findOrFail($task->id)->update([
+            'list_id' => $request->list_id,
+            'name' => $request->name,
+            'description' => $request->description,
+            'priority' => $request->priority
+        ]);
+
+        return redirect()->back()->with('success', 'Task berhasil diperbarui!');
     }
 }
