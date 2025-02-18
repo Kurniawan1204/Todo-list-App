@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use App\Models\Task;
 use App\Models\TaskList;
@@ -11,44 +12,43 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('query');
-
+    
         if ($query) {
             $tasks = Task::where('name', 'like', "%{$query}%")
                 ->orWhere('description', 'like', "%{$query}%")
                 ->latest()
                 ->get();
-
+    
             $lists = TaskList::where('name', 'like', "%{$query}%")
                 ->orWhereHas('tasks', function ($q) use ($query) {
                     $q->where('name', 'like', "%{$query}%")
                         ->orWhere('description', 'like', "%{$query}%");
                 })
-                ->with('tasks')
-                ->get();
-
-
-            if ($tasks->isEmpty()) {
-                $lists->load('tasks');
-            } else {
-                $lists->load(['tasks' => function ($q) use ($query) {
+                ->with(['tasks' => function ($q) use ($query) {
                     $q->where('name', 'like', "%{$query}%")
                         ->orWhere('description', 'like', "%{$query}%");
-                }]);
-            }
+                }])
+                ->get();
         } else {
+            // Ambil semua data jika query kosong
             $tasks = Task::latest()->get();
             $lists = TaskList::with('tasks')->get();
         }
-
-        $data = [
+    
+        return view('pages.home', [
             'title' => 'Home',
             'lists' => $lists,
             'tasks' => $tasks,
             'priorities' => Task::PRIORITIES
-        ];
-
-        return view('pages.home', $data);
+        ]);
     }
+    public function todayTasks()
+{
+    $today = now()->toDateString();
+    $tasks = Task::whereDate('deadline', $today)->get();
+
+    return response()->json($tasks);
+}
 
 
     public function store(Request $request)
