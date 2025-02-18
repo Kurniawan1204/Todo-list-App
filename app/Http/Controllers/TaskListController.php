@@ -22,6 +22,6 @@ class TaskListController extends Controller
     public function destroy($id) {
         TaskList::findOrFail($id)->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('delete', 'List berhasil dihapus!');
     }
 }

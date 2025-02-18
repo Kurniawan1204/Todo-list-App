@@ -30,10 +30,17 @@
         </script>
     @endif
 
+    
     @include('partials.count')
 
     <div id="content" class="overflow-y-hidden overflow-x-hidden">
-                
+        @if(request()->query('query'))
+        @if($tasks->isEmpty() && $lists->isEmpty())
+            <div class="alert alert-warning text-center mt-3">
+                <strong>Data tidak ditemukan!</strong> Tidak ada tugas atau list yang sesuai dengan pencarian "{{ request()->query('query') }}".
+            </div>
+        @endif
+    @endif
         @if ($lists->count() == 0)
             <div class="d-flex flex-column align-items-center">
                 <p class="fw-bold text-center">Belum ada tugas yang ditambahkan</p>
@@ -59,19 +66,12 @@
             </button>
             {{-- END TAMBAH LIST --}}
         
-            {{-- FORM PENCARIAN --}}
-            <div class="col-auto">
-                <form action="{{ route('home') }}" method="GET" class="d-flex gap-3 me-3">
-                    <input type="text" class="form-control" name="query" placeholder="Cari tugas atau list..."
-                        value="{{ request()->query('query') }}">
-                    <button type="submit" class="btn btn-outline-primary">Cari</button>
-                </form>
-            </div>
+           
         </div>        
         @endif        
         
             {{-- START LIST --}}
-        <div class="d-flex gap-3 px-3 flex-nowrap overflow-x-scroll overflow-y-hidden" style="height: 100vh;">
+        <div class="d-flex gap-3 px-3 flex-nowrap  overflow-x-scroll overflow-y-hidden" style="height: 100vh;">
             @foreach ($lists as $list)
                 <div class="card flex-shrink-0" style="width: 20rem; max-height: 60vh;">
                     <div class="card-header d-flex align-items-center justify-content-between">
