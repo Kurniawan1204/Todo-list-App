@@ -1,34 +1,37 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Migrations\Migration; // Mengimpor kelas Migration
+use Illuminate\Database\Schema\Blueprint; // Mengimpor kelas Blueprint untuk membuat tabel
+use Illuminate\Support\Facades\Schema; // Mengimpor Schema untuk manipulasi database
 
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Menjalankan migrasi untuk membuat tabel tasks.
      */
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('list_id')->constrained('task_lists')->onDelete('cascade'); // ✅ Pindahkan ke atas
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->date('deadline')->nullable(); 
-            $table->boolean('is_completed')->default(false);
-            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
-            $table->timestamps();
+            $table->id(); // Primary Key (Auto Increment)
+           
+            $table->string('name'); // Nama tugas
+            $table->string('description')->nullable(); // Deskripsi tugas (opsional)
+            $table->date('deadline'); // Tenggat waktu tugas (opsional)
+            $table->boolean('is_completed')->default(false); // Status tugas, default tidak selesai
+            $table->enum('priority', ['low', 'medium', 'high'])->default('medium'); // Prioritas tugas
+            $table->timestamps(); // Menambahkan kolom created_at dan updated_at
+
+             $table->foreignId('list_id') // Foreign Key yang merujuk ke tabel task_lists
+                ->constrained('task_lists') // Menetapkan relasi dengan tabel task_lists
+                ->onDelete('cascade'); // Jika task_list dihapus, semua task terkait ikut dihapus
         });
-        
-            }
+    }
 
     /**
-     * Reverse the migrations.
+     * Membatalkan migrasi dan menghapus tabel tasks.
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('tasks'); // Menghapus tabel jika migrasi dibatalkan
     }
 };

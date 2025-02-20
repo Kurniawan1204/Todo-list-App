@@ -1,14 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.app') <!-- Menggunakan layout utama dari app.blade.php -->
 
-@section('content')
-    <div id="content" class="container">
+@section('content') <!-- Mulai bagian konten utama -->
+    <div id="content" class="container fade-in">
+        <!-- Tombol kembali ke halaman utama -->
         <div class="d-flex align-items-center">
-            <a href="{{ route('home') }}" class="btn btn-sm">
-                <i class="bi bi-arrow-left-short fs-4"></i>
-                <span class="fw-bold fs-5">Kembali</span>
-            </a>
+            <a href="{{ route('home') }}" class="btn btn-outline-secondary">KEMBALI</a>
         </div>
 
+        <!-- Menampilkan pesan sukses jika ada -->
         @session('success')
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
@@ -18,7 +17,8 @@
 
         <div class="row my-3">
             <div class="col-8">
-                <div class="card" style="height: 80vh;">
+                <div class="card" style="height: 60vh;">
+                    <!-- Header kartu menampilkan nama tugas dan tombol edit -->
                     <div class="card-header d-flex align-items-center justify-content-between overflow-hidden">
                         <h3 class="fw-bold fs-4 text-truncate mb-0" style="width: 80%">
                             {{ $task->name }}
@@ -30,27 +30,29 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <p>
-                            {{ $task->description }}
-                        </p>
+                        <p>{{ $task->description }}</p> <!-- Menampilkan deskripsi tugas -->
                     </div>
                     <div class="card-footer">
+                        <!-- Tombol untuk menghapus task -->
                         <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" type="button" class="btn btn-sm btn-outline-danger w-100">
+                            <button type="submit" class="btn btn-sm btn-outline-danger w-100">
                                 Hapus
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
+
+            <!-- Sidebar detail task -->
             <div class="col-4">
-                <div class="card" style="height: 80vh;">
+                <div class="card" style="height: 60vh;">
                     <div class="card-header d-flex align-items-center justify-content-between overflow-hidden">
                         <h3 class="fw-bold fs-4 text-truncate mb-0" style="width: 80%">Details</h3>
                     </div>
                     <div class="card-body d-flex flex-column gap-2">
+                        <!-- Form untuk mengubah daftar tugas (Task List) -->
                         <form action="{{ route('tasks.changeList', $task->id) }}" method="POST">
                             @csrf
                             @method('PATCH')
@@ -62,42 +64,45 @@
                                 @endforeach
                             </select>
                         </form>
+                        <!-- Menampilkan prioritas tugas -->
                         <h6 class="fs-6">
-                            Priotitas:
+                            Prioritas:
                             <span class="badge text-bg-{{ $task->priorityClass }} badge-pill" style="width: fit-content">
                                 {{ $task->priority }}
                             </span>
                         </h6>
                     </div>
-                    <div class="card-footer">
-                    </div>
+                    <div class="card-footer"></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal untuk mengedit tugas -->
     <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form action="{{ route('tasks.update', $task->id) }}" method="POST" class="modal-content">
-                @method('PUT')
+        <div class="modal-dialog ">
+            <form action="{{ route('tasks.update', $task->id) }}" method="POST" class="modal-content ">
+                @method('PUT') 
+                 {{-- Menggunakan metode PUT untuk memperbarui data di database. --}}
                 @csrf
-                <div class="modal-header">
+                <div class="modal-header bg-primary">
                     <h1 class="modal-title fs-5" id="editTaskModalLabel">Edit Task</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" value="{{ $task->list_id }}" name="list_id" hidden>
+                    <input type="hidden" value="{{ $task->list_id }}" name="list_id">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="name" name="name"
-                            value="{{ $task->name }}" placeholder="Masukkan nama list">
+                            value="{{ $task->name }}" placeholder="Masukkan nama tugas">
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Deskripsi</label>
-                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Masukkan deskripsi">{{ $task->description }}</textarea>
+                        <textarea class="form-control" name="description" id="description" rows="3"
+                            placeholder="Masukkan deskripsi">{{ $task->description }}</textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="priority" class="form-label">Priority</label>
+                        <label for="priority" class="form-label">Prioritas</label>
                         <select class="form-control" name="priority" id="priority">
                             <option value="low" @selected($task->priority == 'low')>Low</option>
                             <option value="medium" @selected($task->priority == 'medium')>Medium</option>
@@ -105,11 +110,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">Edit</button>
                 </div>
             </form>
         </div>
     </div>
-@endsection
+@endsection <!-- Akhir bagian konten utama -->

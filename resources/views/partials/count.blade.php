@@ -1,5 +1,5 @@
 {{-- Start Count --}}
-<div id="content" class="mb-3 d-flex align-items-center justify-content-center gap-3 container">
+<div id="content" class="mb-3 d-flex align-items-center justify-content-center gap-3 container ">
     {{-- Daftar Tugas --}}
     <div class="card rounded shadow text-white bg-danger text-center" style="width: 160px; height: 160px;">
         <div class="card-body d-flex flex-column align-items-center justify-content-center">
@@ -14,7 +14,7 @@
         <div class="card-body d-flex flex-column align-items-center justify-content-center">
             <i class="bi bi-card-checklist fs-2"></i>
             <h6 class="card-title mt-2">Total List</h6>
-            <p class="card-text fs-4 fw-bold m-0">{{ $lists->count() }}</p>
+            <p class="card-text fs-4 fw-bold m-0">{{ $listis->count() }}</p>
         </div>
     </div>
 

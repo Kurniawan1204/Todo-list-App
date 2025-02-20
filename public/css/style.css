@@ -1,35 +1,37 @@
-:root{
+/* Variabel CSS (--nama-variabel) digunakan untuk menyimpan warna tema utama agar mudah dikelola. */
+:root {
     --base-color: white;
-    --base-variant:white;
+    --base-variant: white;
     --text-color: #111528;
     --secondary-text: #232738;
     --primary-color: #ffffff;
     --accent-color: #0071ff;
     --nav-color: linear-gradient(90deg, #146de2, #265aca);
     --label-color: #111528;
-
 }
-.darkmode{
+/* .darkmode mengubah warna menjadi lebih gelap saat mode gelap aktif. */
+.darkmode {
     --base-color: rgb(45, 43, 43);
-    --base-variant:rgb(52, 44, 44);
+    --base-variant: rgb(52, 44, 44);
     --text-color: #ffffff;
     --secondary-text: #232738;
     --primary-color: #3a435d;
     --accent-color: #0071ff;
     --nav-color: linear-gradient(90deg, #4a537f, #3a435d);
     --label-color: #111528;
-
 }
 
-*{
+/* Menghapus margin dan padding default dari semua elemen untuk memastikan tata letak lebih konsisten. */
+* {
     margin: 0;
     padding: 0;
 }
 
-html{
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+html {
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
 }
-body{
+body {
     min-height: 100vh;
     background-color: var(--base-color);
     color: var(--text-color);
@@ -45,7 +47,8 @@ body{
     background-color: var(--primary-color);
     color: var(--text-color);
 }
-label,h5 {
+label,
+h5 {
     color: var(--label-color);
 }
 
@@ -58,11 +61,10 @@ label,h5 {
     width: 250px;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: none; /* Pastikan hanya muncul saat tombol diklik */
     z-index: 1000;
 }
-
 
 .notification-dropdown ul {
     list-style: none;
@@ -105,33 +107,28 @@ label,h5 {
     padding: 0;
 }
 
-
-
 #theme-switch {
     height: 30px;
     width: 30px;
     padding: 0;
     border: none;
-    /* border-radius: 50%; */
-    /* background-color: var(--base-variant); */
     background: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Menghapus posisi fixed agar mengikuti flow layout */
-    position: relative;;
+    position: relative;
 }
 
-#theme-switch i{
+#theme-switch i {
     fill: var(--primary-color);
 }
-#theme-switch i:last-child{
+#theme-switch i:last-child {
     display: none;
 }
-.darkmode #theme-switch i:first-child{
+.darkmode #theme-switch i:first-child {
     display: none;
 }
-.darkmode #theme-switch i:last-child{
+.darkmode #theme-switch i:last-child {
     display: block;
 }
 .darkmode .notification-dropdown {
@@ -143,18 +140,11 @@ label,h5 {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Sesuaikan border agar tetap terlihat */
 }
 
-.modal-content {
+/* .modal-content {
     border-radius: 12px;
     border: none;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.profile-img {
-    width: 100px;
-    height: 100px;
-    border: 3px solid #0071ff;
-    padding: 3px;
-}
+} */
 
 .social-icons a {
     font-size: 18px;
@@ -170,4 +160,17 @@ label,h5 {
     font-weight: 500;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+.fade-in {
+    animation: fadeIn 0.8s ease-out;
+}

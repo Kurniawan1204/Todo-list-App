@@ -68,32 +68,7 @@
     </div>
 </div>
 
-<!-- MODAL PROFIL -->
-<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content p-4">
-        <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
-        
-        <!-- FOTO PROFIL -->
-        <div class="text-center">
-          <img src="{{ asset('img/img-3.JPG') }}" alt="Profil Kurniawan" class="profile-img rounded-circle">
-          <h3 class="mt-3 fw-bold text-dark">Kurniawan</h3>
-          <p class="text-muted">Software Engineer</p>
-          
-          <!-- Icon Sosial Media -->
-          <div class="social-icons mt-2">
-            <a href="#" class="text-dark mx-2"><i class="bi bi-github"></i></a>
-            <a href="#" class="text-primary mx-2"><i class="bi bi-linkedin"></i></a>
-            <a href="#" class="text-danger mx-2"><i class="bi bi-instagram"></i></a>
-          </div>
-        </div>
-        
-        <!-- Informasi Tambahan -->
-        <div class="mt-4 text-center">
-          <p><i class="bi bi-envelope-fill text-primary"></i> kurniawan@example.com</p>
-          <p><i class="bi bi-geo-alt-fill text-danger"></i> Jakarta, Indonesia</p>
-          <p><i class="bi bi-mortarboard-fill text-success"></i> SMK NEGERI 2 SUBANG</p>
-        </div>
+             
       </div>
     </div>
   </div>
